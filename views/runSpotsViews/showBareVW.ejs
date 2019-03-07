@@ -1,0 +1,90 @@
+<% include ../partialsBareViews/headerBareVW %>
+<div class="container">
+    <div class="row bloop">
+        <div class="col-md-3">
+            <p class="lead">YelpCamp</p>
+            <div class="list-group">
+                <li class="list-group-item">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+            <div id="map"></div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail border">
+                <img class="img-responsive" src="<%= runSpot.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">$<%=runSpot.price%>/night</h4>
+                    <h4><%= runSpot.name %></h4>
+                    <h6>Created by <%= runSpot.author.username %></h6>
+                    <h6>Date created: <%=runSpot.date.toDateString()%></h6>
+                    <h6>Date created: <%=runSpot.date.toTimeString()%></h6>
+                    <p><%-runSpot.descrip.replace(/<\/?[^>]+(>|$)/g, "")%></p>
+                    <!--Show edit/delete bottons if logged in-->
+                    
+                    <% if(currentUser && runSpot.author.id.equals(currentUser._id)){  %>
+                    
+                        <a class="btn btn-sm btn-warning" href="/runSpots/<%= runSpot._id %>/editFormBareVW">Edit Form</a>
+                        <form class="delete-form" action="/runSpots/<%=runSpot._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-sm btn-danger">Delete Me</button>
+                        </form>
+                   <% } %>
+                </div>
+            </div>
+            <div class="well border"  id="skrt">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/runSpots/<%= runSpot._id %>/comments/new">Add New Comment</a>
+                </div>
+                <%  runSpot.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right"> 10 days ago</span>
+                            <p>
+                                <%=comment.text%></span>
+                            </p>
+                            <%if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-sm btn-warning"
+                                href="/runSpots/<%= runSpot._id %>/comments/<%=comment._id%>/edit">
+                                Edit Form</a>
+                            <form class="delete-form" action="/runSpots/<%=runSpot._id %>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                <input type="submit" class="btn btn-sm btn-danger" value="Delete">
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function initMap() {
+        var lat = <%= runSpot.lat %>;
+        var lng = <%= runSpot.lng %>;
+        var center = {lat: lat, lng: lng};
+        var lat = new google.maps.Map(document.getElementByID('map'), {
+            zoom: 8,
+            center: center,
+            scrollwheel: false
+        });
+        var contentString = `
+        <strong><%= runSpot.name %><br />
+        <%= runSpot.location %></strong>
+        <p><%= runSpot.descrip %></p>
+        `
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map
+        });
+        marker.addlistener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4WvWKteZ6N_O3QR6QiUkmE-1BP6mm_ew&callback=initMap"></script>
+<% include ../partialsBareViews/footerBareVW %>

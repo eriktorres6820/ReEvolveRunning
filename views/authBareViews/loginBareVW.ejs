@@ -1,0 +1,12 @@
+<% include ../partialsBareViews/headerBareVW %>
+
+<h1>Hi. Please Login</h1>
+<form action="/loginBareVW" method="POST">
+    <input type="text"     name="username"     placeholder="username">
+    <input type="password" name="password"     placeholder="password">
+    <button>Submit</button>
+</form>
+<li><a href="/registerBareVW">Sign Up</a></li>
+<li><a href="/logout">logout</a></li>
+
+<% include ../partialsBareViews/footerBareVW %>

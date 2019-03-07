@@ -1,0 +1,12 @@
+<% include ../partialsBareViews/headerBareVW %>
+
+<h1> Comments page for <%= runSpot.name %></h1>
+
+<form action="/runSpots/<%= runSpot._id %>/comments" method="POST">
+    <textarea name="comment[text]" rows="10" cols="50" required></textarea>
+    <button>Submit</button>
+</form>
+
+<a href="/runSpots">Home</a>
+
+<% include ../partialsBareViews/footerBareVW %>

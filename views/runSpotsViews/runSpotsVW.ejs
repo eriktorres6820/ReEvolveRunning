@@ -1,0 +1,18 @@
+<% include ../partialsBareViews/headerBareVW %>
+<div class="bareList">
+    <h1>Running Spots Page</h1>
+  
+    <a href="/runSpots/">Home</a>
+    
+    <%  runSpots.forEach(function(runSpot){ %>
+        <div>
+            <h4><%=runSpot.name %></h4>
+            <img src="<%=runSpot.image%>">
+            <p><%=runSpot.descrip.replace(/<\/?[^>]+(>|$)/g, "").substring(0, 50)%></p>
+            <p>Date created: <%=runSpot.date.toString()%></p>
+            <a href="/runSpots/<%= runSpot._id %>">Read More</a>
+        </div>
+    <% }); %>
+</div>
+
+<% include ../partialsBareViews/footerBareVW %>

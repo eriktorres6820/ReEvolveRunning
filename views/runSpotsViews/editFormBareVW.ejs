@@ -1,0 +1,17 @@
+<% include ../partialsBareViews/headerBareVW %>
+<h1>Edit <%=runSpot.name %></h1>
+<form action="/runSpots/<%=runSpot._id%>?_method=PUT" method="POST">
+    <input type="text" name="runSpot[name]" value="<%=runSpot.name%>">
+    <input type="number" name="runSpot[price]" value="<%=runSpot.price%>">
+    <input type="text" name="runSpot[image]" value="<%=runSpot.image%>">
+    <textarea name="runSpot[descrip]" rows="10" cols="50"><%=runSpot.descrip%></textarea>
+    <div class="form-group">
+        <label for="location">Location</label>
+        <input class="form-control" type="text" name="location" id="location" value="<%= runSpot.location %>">
+    </div>
+    <button>Submit</button>
+</form>
+
+<img src="<%=runSpot.image%>">
+<a href="/runSpots">Home</a>
+<% include ../partialsBareViews/footerBareVW %>
