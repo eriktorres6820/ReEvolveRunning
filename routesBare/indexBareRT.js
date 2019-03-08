@@ -29,7 +29,7 @@ router.post("/registerBareVW", function(req, res){
         }
         passport.authenticate("local")(req, res, function(){
             req.flash("success", "Welcome " + user.username);
-            res.redirect("/runSpots");
+            res.redirect("/runSpotsVW");
         });
     });
 });

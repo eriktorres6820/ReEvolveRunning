@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var Runspots = require("./ModelsBare/runSpotsMD");
-var Comment  = require("./ModelsBare/commentsBareMD");
+var Campground = require("./Models/Camp");
+var Comment   = require("./Models/comments");
  
 // var data = [
 //     {
@@ -18,27 +18,27 @@ var Comment  = require("./ModelsBare/commentsBareMD");
 //         image: "https://farm1.staticflickr.com/189/493046463_841a18169e.jpg",
 //         descrip: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
 //     }
-//  ];
+// ];
  
 function seedDB(){
-   //Remove all runSpots
-   Runspots.remove({}, function(err){
+   //Remove all campgrounds
+   Campground.remove({}, function(err){
         if(err){
             console.log(err);
         }
-        console.log("removed runSpots!");
+        console.log("removed campgrounds!");
         Comment.remove({}, function(err) {
             if(err){
                 console.log(err);
             }
             console.log("removed comments!");
-        //add a few runSpots
+        //add a few campgrounds
         //  data.forEach(function(seed){
-        //         Runspots.create(seed, function(err, runSpot){
+        //         Campground.create(seed, function(err, campground){
         //             if(err){
         //                 console.log(err)
         //             } else {
-        //                 console.log("added a runSpot");
+        //                 console.log("added a campground");
         //                 //create a comment
         //                 Comment.create(
         //                     {
@@ -48,8 +48,8 @@ function seedDB(){
         //                         if(err){
         //                             console.log(err);
         //                         } else {
-        //                             runSpot.comments.push(comment);
-        //                             runSpot.save();
+        //                             campground.comments.push(comment);
+        //                             campground.save();
         //                             console.log("Created new comment");
         //                         }
         //                     }

@@ -1,17 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Runspot = require("../ModelsBare/runSpotsMD"),
-    middleware  = require("../middlewareBare"),
-    NodeGeocoder = require('node-geocoder');
- 
-var options = {
-  provider: 'google',
-  httpAdapter: 'https',
-  apiKey: process.env.GEOCODER_API_KEY,
-  formatter: null
-};
- 
-var geocoder = NodeGeocoder(options);
+    middleware  = require("../middlewareBare");
 
 //INDEX - Show all runSpots. 
 router.get("/", function(req, res){
@@ -25,39 +15,31 @@ router.get("/", function(req, res){
     });
 });
 
+
 //CREATE ROUTE- Colts from the Video. 
 router.post("/", middleware.isLoggedIn,  function(req, res){
     //get data from form and add to runSpots array
     var name = req.body.name;
     var image = req.body.image;
-    var desc = req.body.descrip;
+    var desc = req.body.description;
     var author = {
         id: req.user,
         username: req.user.username
     };
-    geocoder.geocode(req.body.location, function (err, data) {
-        if (err || !data.length) {
-            console.log(err);
-            req.flash('error', 'Invalid address');
-            return res.redirect('back');
-        }
-    var lat = data[0].latitude;
-    var lng = data[0].longitude;
-    var location = data[0].formattedAddress;
-    var newRunspot = {name: name, image: image, descrip: desc, author: author, location: location, lat: lat, lng: lng};
-    // Create a new runSpot and save to DB
+    var newRunspot = {name: name, image: image, descrip: desc, author: author};
+    console.log(req.user);
+    // Create a new runSpot and save to db
     Runspot.create(newRunspot, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
-            //redirect back to runSpots page
             console.log(newlyCreated);
             req.flash("success", "Runspot added");
             res.redirect("/runSpots");
         }
     });
 });
-});
+
 
 
 //NEW ROUTE - show form to create new runSpot. 
@@ -89,27 +71,19 @@ router.get("/:id/editFormBareVW", middleware.isLoggedIn, middleware.checkRunspot
 
 //UPDATE ROUTE - Update page after editting
 router.put("/:id/", middleware.checkRunspotOwnership, function(req, res){
-    geocoder.geocode(req.body.location, function(err, data) {
-        if (err || !data.length) {
-            req.flash('error', 'Invalid address');
-            return res.redirect('back');
-        }
-        req.body.runSpot.lat = data[0].latitude;
-        req.body.runspot.lng = data[0].longitude;
-        req.body.runSPot.location = data[0].formattedAddress;
-        req.body.runSpot.descrip = req.sanitize(req.body.runSpot.descrip);
-        //Find runSpot using ID.
-        Runspot.findByIdAndUpdate(req.params.id, req.body.runSpot, function(err, UpdatedRunspot){
-        if(err){
+    //Find runSpot using ID. 
+    req.body.runSpot.descrip = req.sanitize(req.body.runSpot.descrip);
+    Runspot.findByIdAndUpdate(req.params.id, req.body.runSpot, function(error, UpdatedCamp){
+        if(error){
             res.send("oops");
             res.redirect("/runSpotsVW");
         } else {
             req.flash("success", "Runspot editted");
-            res.redirect("/runSpots/" + req.params.id);  //UpdatedRunspot._id);
+            res.redirect("/runSpots/" + req.params.id);
         }
-        });
     });
 });
+
 
 //DELETE ROUTE
 router.delete("/:id/", middleware.checkRunspotOwnership, function(req,res){

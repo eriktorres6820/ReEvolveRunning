@@ -1,4 +1,3 @@
-require('dotenv').config();
 var express               = require("express"),
     app                   = express(),
     session               = require("express-session"),
@@ -7,7 +6,6 @@ var express               = require("express"),
     flash                 = require("connect-flash"),
     methodOverride        = require("method-override"),
     expressSanitizer      = require("express-sanitizer"),
-    request               = require('request'),
     //seedDB                = require("./seed"),
     User                  = require("./ModelsBare/runnerMD"),
     passport              = require("passport"),
@@ -18,9 +16,9 @@ var runSpotRoutes         = require("./routesBare/runSpotsRT"),
     indexRoutes           = require("./routesBare/indexBareRT");
 
 var db                = mongoose.connection;
-
-var url = process.env.DATABASEURL || "mongodb://localhost:27017/Barefoot";
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/barefoot";
 mongoose.connect(url, { useNewUrlParser: true});
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public")); //console.log(__dirname);
@@ -68,12 +66,6 @@ app.listen(process.env.PORT, process.env.IP, function(){
     console.log("The Barefoot Server Started");
 });
 
-/* ======= Exported Variables ==========*/
-/*
-  $ export DATABASEURL= the local server
-
-*/
-
 /*========== git basics =================================*/
 /*
   Commands                                  Description
@@ -81,7 +73,7 @@ app.listen(process.env.PORT, process.env.IP, function(){
 * git init                                  Initializes git repository
 * git status                                Display current status of git
 * git add fileName.type                     Begin tracking designated files
-* git commit -am "Commit Message Here"       Commit added files with "message about file"
+* git commit -m "Commit Message Here"       Commit added files with "message about file"
 * git log                                   Display all commits and CommitIds
 * git checkout CommitId                     Detached head to previous commit
 * git revert --no-commit CommitId..HEAD     Revert master to previous commit
@@ -101,8 +93,7 @@ app.listen(process.env.PORT, process.env.IP, function(){
     use NAME         // switch to database called NAME
     show collections // shows all the collections in the database
     db.NAME.find()   // shows Key Valley pairs contained in the database
-    db.NAME.drop()   // Deletes collections
-    db.dropDatabase()// Deletes databases, must be switched to db first
+    db.NAME.drop()   // Deletes database
 */
 
 /*=============== Heroku commands =========================*/
@@ -126,6 +117,10 @@ app.listen(process.env.PORT, process.env.IP, function(){
     
 *heroku run CODE 
     Runs CODE
+
 *
-*
+
 */
+
+/*========== MongoDB Atlas ==============*/
+

@@ -6,10 +6,6 @@ var runspotSchema = new mongoose.Schema({
     price:      String,
     image:      String,
     descrip:    String,
-    location:   String,
-    lat:        Number,
-    lng:        Number,
-    
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
