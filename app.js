@@ -16,7 +16,7 @@ var runSpotRoutes         = require("./routesBare/runSpotsRT"),
     indexRoutes           = require("./routesBare/indexBareRT");
 
 var db                = mongoose.connection;
-var url = process.env.DATABASEURL || "mongodb://localhost:27017/barefoot";
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/runningsports";
 mongoose.connect(url, { useNewUrlParser: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -93,7 +93,8 @@ app.listen(process.env.PORT, process.env.IP, function(){
     use NAME         // switch to database called NAME
     show collections // shows all the collections in the database
     db.NAME.find()   // shows Key Valley pairs contained in the database
-    db.NAME.drop()   // Deletes database
+    db.NAME.drop()   // Deletes collections
+    db.dropDatabase()// Deletes database
 */
 
 /*=============== Heroku commands =========================*/

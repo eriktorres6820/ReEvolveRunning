@@ -31,6 +31,7 @@ router.post("/", middleware.isLoggedIn,  function(req, res){
     // Create a new runSpot and save to db
     Runspot.create(newRunspot, function(err, newlyCreated){
         if(err){
+            console.log("Edic Fail Again111")
             console.log(err);
         } else {
             console.log(newlyCreated);
