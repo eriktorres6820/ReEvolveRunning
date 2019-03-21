@@ -17,7 +17,7 @@ var express               = require("express"),
     indexRoutes           = require("./routesBare/indexBareRT");
 
 var db  = mongoose.connection;
-var url = process.env.DATABASEURL || "mongodb://localhost:27017/Barefoot12";
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/runningsports";
 mongoose.connect(url, { useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
